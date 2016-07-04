@@ -18,6 +18,11 @@ game = 'to win' // override for now
 // Human useful bot adding flow for adding this bot to new channels.
 var addBotFlow = 'https://discordapp.com/oauth2/authorize?client_id=199328977058267137&scope=bot&permissions=0'
 
+var help = `Hi, I'm FriendsBot! I love singing about friends!
+A few things you can ask of me:
+!friends: I will paste a link to a youtube video about friends.
+!sing: I will sing in the General voice chat about friends.
+!stop: I will stop singing in the General voice chat about friends.`
 
 
 var mybot = new Discord.Client();
@@ -41,6 +46,8 @@ mybot.on('ready', function(err) {
       singThatSong(mybot)
     } else if (message.content === '!stop') {
       stopSinging(mybot)
+    } else if (message.content === '!help') {
+      mybot.reply(message, help)
     }
 
     if (message.content === '!ping') {
