@@ -30,16 +30,17 @@ mybot.on('ready', function(err) {
     if (err) { throw err }
   })
 
-  mybot.on("message", function(message) {
+  mybot.on('message', function(message) {
     if (message.content[0] !== '!') { return }
 
+    channels = message.channel.server.channels
+
     if (message.content === '!friends') {
-      //mybot.reply(message, friendsForever)
-      channels = message.channel.server.channels
-
-      singThatSong(mybot)
-
+      mybot.reply(message, friendsForever)
     } else if (message.content === '!sing') {
+      singThatSong(mybot)
+    } else if (message.content === '!stop') {
+      stopSinging(mybot)
     }
 
     if (message.content === '!ping') {
@@ -48,10 +49,14 @@ mybot.on('ready', function(err) {
   })
 })
 
-function singThatSong(mybot) {
-  var channel = channels.filter((channel) => {
+function getMainVoiceChannel(channels) {
+  return channels.filter((channel) => {
     return channel.name === 'General'
   })[0]
+}
+
+function singThatSong(mybot) {
+  var channel = getMainVoiceChannel(channels)
 
   mybot.joinVoiceChannel(channel, function(err, voiceConnection) {
 
@@ -67,13 +72,20 @@ function singThatSong(mybot) {
         }
 
         streamIntent.on('end', function() {
-          mybot.leaveVoiceChannel(channel, function(err) {
-            if (err) {
-              console.log('Bot failed to leave channel')
-            }
-          })
+          stopSinging(channel, mybot)
         })
       })
+    }
+  })
+}
+
+function stopSinging(mybot) {
+  var channel = getMainVoiceChannel(channels)
+
+  console.log('stopping song, leaving channel.')
+  mybot.leaveVoiceChannel(channel, function(err) {
+    if (err) {
+      console.log('Bot failed to leave channel')
     }
   })
 }
