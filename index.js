@@ -57,6 +57,7 @@ function singThatSong(mybot) {
 
     if (!voiceConnection.playing) {
 
+      console.log(`Attempting to play ${friendsPath}`)
       voiceConnection.playFile(friendsPath, {
         volume: 0.25
       }, function(err, streamIntent) {
