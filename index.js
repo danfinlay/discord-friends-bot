@@ -32,6 +32,10 @@ mybot.on('ready', function(err) {
     if (message.content === '!friends') {
       mybot.reply(message, friendsForever)
     }
+
+    if (message.content === '!ping') {
+      mybot.reply(message, 'pong!')
+    }
   })
 })
 
