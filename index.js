@@ -39,8 +39,8 @@ mybot.on('ready', function(err) {
       mybot.reply(message, friendsForever)
     } else if (message.content === '!sing') {
       singThatSong(mybot)
-   // } else if (message.content === '!stop') {
-   //   stopSinging(mybot)
+    } else if (message.content === '!stop') {
+      stopSinging(mybot)
     }
 
     if (message.content === '!ping') {
@@ -72,7 +72,7 @@ function singThatSong(mybot) {
         }
 
         streamIntent.on('end', function() {
-          stopSinging(channel, mybot)
+          stopSinging(mybot)
         })
       })
     }
