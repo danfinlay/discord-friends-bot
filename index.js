@@ -54,6 +54,7 @@ function emitBootMessage(mybot) {
     if (err) {
       console.error(`Failed to send message ${bootMessage}`)
       console.error(err)
+      throw err
     }
   })
 }
@@ -116,6 +117,7 @@ function singThatSong(mybot, url) {
         if (err) {
           console.error('Playing failed')
           console.error(err)
+          throw err
         }
 
         streamIntent.on('end', function() {
@@ -125,6 +127,7 @@ function singThatSong(mybot, url) {
         streamIntent.on('error', function(err) {
           console.error('audio stream had error:')
           console.error(err)
+          throw err
         })
       })
     }
@@ -138,6 +141,7 @@ function stopSinging() {
   voiceConnection.destroy(function(err) {
     if (err) {
       console.log('Bot failed to leave channel')
+      throw err
     }
   })
 }
