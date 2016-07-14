@@ -73,6 +73,8 @@ function answerMessage(mybot, message) {
     stopSinging(mybot)
   } else if (message.content === '!help') {
     mybot.reply(message, help)
+  } else if (message.indexOf('!volume') === 0) {
+    adjustVolume(mybot, message.split(' ')[1])
   }
 }
 
@@ -132,6 +134,15 @@ function singThatSong(mybot, url) {
       })
     }
   })
+}
+
+function adjustVolume(mybot, volumeStr) {
+  if (!voiceConnection) { return }
+  let volume = parseFloat(volumeStr)
+  if (volume > 1) {
+    volume = 1
+  }
+  voiceConnection.setVolume(volume)
 }
 
 function stopSinging() {
